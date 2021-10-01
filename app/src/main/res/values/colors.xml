@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#FB4339</color>
+    <color name="colorPrimaryDark">#C4391D</color>
+    <color name="colorAccent">#FB4339</color>
+    <color name="FirePurple">#6B00A7</color>
+    <color name="FireBlue">#FD2D87DE</color>
+    <color name="FireGrey">#606060</color>
+    <color name="FireGreen">#29cd4d</color>
+    <color name="FireOrange">#E9EC762E</color>
+    <color name="FireParrot">#D5E63B</color>
+    <color name="FirePink">#FF5F55</color>
+    <color name="FireGreyLight">#728A8787</color>
+    <color name="FireCyan">#67BEDD</color>
+    <color name="FireBlueDark">#206FBD</color>
+    <color name="DeepBlue">#070432</color>
+    <color name="FireViolet">#915DB0</color>
+    <color name="RedKaroStartup">#FE4237</color>
+    <color name="LightRedChatKaroStartup">#AAFE4237</color>
+    <color name="RedDarkerKaroStartup">#C4391D</color>
+    <color name="OrangeKaroStartup">#FB4339</color>
+
+    <color name="black_overlay">#66000000</color>
+
+</resources>
