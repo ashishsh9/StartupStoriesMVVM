@@ -1,4 +1,6 @@
 package com.tbashish.startupstoriesmvvm.viewmodel
 
-class UserListViewModel {
+import androidx.lifecycle.ViewModel
+
+class UserListViewModel : ViewModel() {
 }
