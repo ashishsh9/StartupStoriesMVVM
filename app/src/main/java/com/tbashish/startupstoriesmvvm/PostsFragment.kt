@@ -7,8 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.*
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.tbashish.startupstoriesmvvm.adapter.PostListAdapter
+import com.tbashish.startupstoriesmvvm.model.Post
 import com.tbashish.startupstoriesmvvm.viewmodel.PostListViewModel
 import com.tbashish.startupstoriesmvvm.viewmodel.PostListViewModelFactory
+import kotlinx.android.synthetic.main.fragment_posts.*
 
 class PostsFragment : Fragment() {
 
@@ -34,6 +39,9 @@ class PostsFragment : Fragment() {
 
     private fun init(){
         initViewModel()
+        initData()
+        initViewModelObserver()
+        initAdapter()
     }
 
     private lateinit var postListViewModel: PostListViewModel
@@ -41,7 +49,38 @@ class PostsFragment : Fragment() {
         postListViewModel = ViewModelProviders.of(this, PostListViewModelFactory())
                 .get(PostListViewModel::class.java)
         println("initviewmodel")
-
-
     }
+
+    private fun initData(){
+        postListViewModel.getPostList()
+    }
+
+    private fun initViewModelObserver(){
+        postListViewModel.postList.observe(viewLifecycleOwner, {
+            onGetPostListResponse(it)
+        })
+    }
+
+    private lateinit var linearLayoutManager: LinearLayoutManager
+    val adapter = PostListAdapter()
+    private fun initAdapter() {
+        println("initadapter")
+        linearLayoutManager = LinearLayoutManager(activity , RecyclerView.VERTICAL , false)
+        postsRecycler.adapter = adapter
+        postsRecycler.layoutManager = linearLayoutManager
+    }
+
+    private fun onGetPostListResponse(resultResponse : List<Post>?){
+        if (resultResponse != null) {
+            adapterListSubmit(resultResponse)
+        }
+    }
+
+    lateinit var data : ArrayList<*>
+    private fun adapterListSubmit(resultResponse: List<Post>?){
+        data = resultResponse as ArrayList<*>
+        adapter.submitList(data)
+    }
+
+
 }
