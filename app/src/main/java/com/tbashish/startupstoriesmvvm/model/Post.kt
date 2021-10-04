@@ -7,5 +7,6 @@ data class Post(
     val content : Map<String, String>,
     val excerpt : Map<String, String>,
     val featured_media : Int,
-    val author : Int
+    val author : Int,
+    var imagePath : String
 )

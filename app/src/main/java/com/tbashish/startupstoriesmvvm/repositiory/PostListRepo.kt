@@ -1,6 +1,7 @@
 package com.tbashish.startupstoriesmvvm.repositiory
 
 import androidx.lifecycle.MutableLiveData
+import com.tbashish.startupstoriesmvvm.model.MediaModel
 
 import com.tbashish.startupstoriesmvvm.model.Post
 import com.tbashish.startupstoriesmvvm.service.RetrofitClient
@@ -18,13 +19,60 @@ class PostListRepo {
         val retrofit = RetrofitClient().getInstance()
         val request = retrofit.create(RetrofitServices::class.java)
 
-        return withContext(Dispatchers.IO) {
+        var postList =  withContext(Dispatchers.IO) {
             val async = async {
                 request.getPosts()
+
             }
 
-            val postListResponse = async.await()
+            var postListResponse = async.await()
             postListResponse
         }
+
+        println("POstLIstResonse ${postList}")
+
+//        for (post in postList){
+//            val featuredMedia = post.featured_media
+//            println("FeaturedMedia = ${featuredMedia}");
+//            var mediaModel : MediaModel
+//            mediaModel = withContext(Dispatchers.IO) {
+//                val response = async {
+//                    request.getPostImage(featuredMedia)
+//                }.await()
+//                response
+//            }
+//            var imagePath = mediaModel.guid["rendered"]
+//            print("ImagePath = ${imagePath}")
+//            post.imagePath = imagePath.toString()
+//
+//
+//
+//
+//        }
+        return postList
+
     }
+
+//    suspend fun getImages(request : RetrofitServices, postListResponse : List<Post>): List<Post>{
+//
+//        for (post in postListResponse){
+//            val featuredMedia = post.featured_media
+//            var mediaModel : MediaModel
+//            withContext(Dispatchers.IO) {
+//               mediaModel =  async {
+//                    request.getPostImage(featuredMedia)
+//                }.await()
+//
+//            }
+//            var imagePath = mediaModel.guid["rendered"]
+//
+//            if (imagePath != null) {
+//                post.imagePath = imagePath
+//            }
+//
+//
+//        }
+//
+//        return postListResponse
+//    }
 }

@@ -35,7 +35,7 @@ class PostListViewHolder(val binding: PostcardBinding) : RecyclerView.ViewHolder
         binding.postTitle.text = postTitle["rendered"]
         binding.postContent.text = Jsoup.parse(postExcerpt["rendered"]).text()
         binding.postDate.text = postAuthor
-        //Glide.with(photo).load("https://image.tmdb.org/t/p/w500${post.featured_media}").into(photo)
+        Glide.with(photo).load(post.imagePath).into(photo)
 
     }
 
