@@ -7,17 +7,16 @@ import com.tbashish.startupstoriesmvvm.model.Post
 import com.tbashish.startupstoriesmvvm.service.RetrofitClient
 import com.tbashish.startupstoriesmvvm.service.RetrofitServices
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 class PostListRepo {
 
-    private val _networkState = MutableLiveData<PostListNetworkState>()
-    val _PostListResponse = MutableLiveData<List<Post>>()
-
     suspend fun fetchPostData(): List<Post> {
         val retrofit = RetrofitClient().getInstance()
         val request = retrofit.create(RetrofitServices::class.java)
+        //println("Fetching PostList...")
 
         var postList =  withContext(Dispatchers.IO) {
             val async = async {
@@ -25,30 +24,35 @@ class PostListRepo {
 
             }
 
-            var postListResponse = async.await()
+            val postListResponse = async.await()
             postListResponse
         }
 
-        println("POstLIstResonse ${postList}")
 
-//        for (post in postList){
-//            val featuredMedia = post.featured_media
-//            println("FeaturedMedia = ${featuredMedia}");
-//            var mediaModel : MediaModel
-//            mediaModel = withContext(Dispatchers.IO) {
-//                val response = async {
-//                    request.getPostImage(featuredMedia)
-//                }.await()
-//                response
-//            }
-//            var imagePath = mediaModel.guid["rendered"]
-//            print("ImagePath = ${imagePath}")
-//            post.imagePath = imagePath.toString()
-//
-//
-//
-//
-//        }
+        // Is this correct way? Calling another API below
+        // Can add and populate as soon as one is received?
+
+        val request2 = retrofit.create(RetrofitServices::class.java)
+
+        for (post in postList){
+            val featuredMedia = post.featured_media.toString()
+            println("FeaturedMedia = ${featuredMedia}");
+            val mediaModel = GlobalScope.async(Dispatchers.IO) {
+                println("Calling Function to Get Image ${featuredMedia}")
+                val resp = request2.getPostImage(featuredMedia)
+                println("Resp Received")
+                resp
+
+            }.await()
+
+            val imagePath = mediaModel.guid["rendered"]
+            print("ImagePath = ${imagePath}")
+            post.imagePath = imagePath.toString()
+
+
+
+
+        }
         return postList
 
     }
